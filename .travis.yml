@@ -9,6 +9,8 @@ script:
       fedora:24 \
       /bin/bash -c 'dnf install -y curl dbus make sudo systemd-container tar unzip && dbus-uuidgen --ensure=/etc/machine-id && make'
   - sudo chown -R `whoami` .
+after_success:
+  - ls . && ls -la build && ls -la ./dist
 deploy:
   provider: releases
   api_key:
