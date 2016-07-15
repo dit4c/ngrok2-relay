@@ -1,6 +1,10 @@
+sudo: required
 language: c
 script: make
-sudo: required
+addons:
+  apt:
+    packages:
+      - systemd-container
 deploy:
   provider: releases
   api_key:
