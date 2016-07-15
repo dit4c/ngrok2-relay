@@ -6,7 +6,7 @@ script: |
   docker run -ti --rm --privileged -w /build -v `pwd`:/build \
     -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
     fedora:24 \
-    /bin/bash -c 'dnf install -y curl dbus make sudo systemd-container tar unzip && dbus-uuidgen --ensure=/etc/machine-id && make'"
+    /bin/bash -c 'dnf install -y curl dbus make sudo systemd-container tar unzip && dbus-uuidgen --ensure=/etc/machine-id && make'
 deploy:
   provider: releases
   api_key:
