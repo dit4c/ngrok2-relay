@@ -1,17 +1,30 @@
-.DEFAULT_GOAL := dist/dit4c-router-ngrok2.aci
+.DEFAULT_GOAL := dist/dit4c-helper-listener-ngrok2-CHECKSUM
 
 CLIENT_INSTALLER_URL=https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
 ACBUILD_VERSION=0.3.1
 DOCKER2ACI_VERSION=0.12.0
 ACBUILD=build/acbuild
+NGROK_REGIONS=ap au eu us
+IMAGES=$(foreach region, $(NGROK_REGIONS), dist/dit4c-helper-listener-ngrok2-$(region).linux.amd64.aci)
 
-dist/dit4c-router-ngrok2.aci: build/acbuild build/library-debian-8.aci build/ngrok | dist
+dist/dit4c-helper-listener-ngrok2-CHECKSUM: dist/dit4c-helper-listener-ngrok2.linux.amd64.aci $(IMAGES)
+	sha512sum --tag $^ | sed -e 's/dist\///' > dist/dit4c-helper-listener-ngrok2-CHECKSUM
+
+dist/dit4c-helper-listener-ngrok2-%.linux.amd64.aci: dist/dit4c-helper-listener-ngrok2.linux.amd64.aci
+	sudo rm -rf .acbuild
+	sudo $(ACBUILD) --debug begin ./dist/dit4c-helper-listener-ngrok2.linux.amd64.aci
+	sudo $(ACBUILD) environment add NGROK_REGION $*
+	sudo $(ACBUILD) set-name dit4c-helper-listener-ngrok2-$*
+	sudo $(ACBUILD) write --overwrite dist/dit4c-helper-listener-ngrok2-$*.linux.amd64.aci
+	sudo $(ACBUILD) end
+
+dist/dit4c-helper-listener-ngrok2.linux.amd64.aci: build/acbuild build/library-debian-8.aci build/ngrok | dist
 	sudo rm -rf .acbuild
 	sudo $(ACBUILD) --debug begin ./build/library-debian-8.aci
 	sudo $(ACBUILD) copy build/ngrok /usr/bin/ngrok
 	sudo $(ACBUILD) copy jwt /usr/bin/jwt
 	sudo $(ACBUILD) environment add DIT4C_INSTANCE_PRIVATE_KEY ""
-	sudo $(ACBUILD) environment add NGROK_REGION au
+	sudo $(ACBUILD) environment add NGROK_REGION ""
 	sudo $(ACBUILD) environment add NGROK_BACKEND ""
 	sudo $(ACBUILD) environment add JWT_KID ""
 	sudo $(ACBUILD) environment add JWT_ISS ""
@@ -21,8 +34,8 @@ dist/dit4c-router-ngrok2.aci: build/acbuild build/library-debian-8.aci build/ngr
 	sudo $(ACBUILD) copy listen_for_url.sh /opt/bin/listen_for_url.sh
 	sudo $(ACBUILD) copy notify_portal.sh /opt/bin/notify_portal.sh
 	sudo $(ACBUILD) run -- sh -c 'DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y curl && apt-get clean'
-	sudo $(ACBUILD) set-name dit4c-router-ngrok2
-	sudo $(ACBUILD) write --overwrite dist/dit4c-router-ngrok2.aci
+	sudo $(ACBUILD) set-name dit4c-helper-listener-ngrok2
+	sudo $(ACBUILD) write --overwrite dist/dit4c-helper-listener-ngrok2.linux.amd64.aci
 	sudo $(ACBUILD) end
 
 dist:
