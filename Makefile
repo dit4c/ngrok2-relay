@@ -24,10 +24,11 @@ dist/dit4c-helper-listener-ngrok2.linux.amd64.aci: build/acbuild build/library-d
 	sudo $(ACBUILD) copy build/ngrok /usr/bin/ngrok
 	sudo $(ACBUILD) copy jwt /usr/bin/jwt
 	sudo $(ACBUILD) environment add DIT4C_INSTANCE_PRIVATE_KEY ""
+	sudo $(ACBUILD) environment add DIT4C_INSTANCE_JWT_KID ""
+	sudo $(ACBUILD) environment add DIT4C_INSTANCE_JWT_ISS ""
+	sudo $(ACBUILD) environment add DIT4C_INSTANCE_HELPER_AUTH_HOST ""
+	sudo $(ACBUILD) environment add DIT4C_INSTANCE_HELPER_AUTH_PORT ""
 	sudo $(ACBUILD) environment add NGROK_REGION ""
-	sudo $(ACBUILD) environment add NGROK_BACKEND ""
-	sudo $(ACBUILD) environment add JWT_KID ""
-	sudo $(ACBUILD) environment add JWT_ISS ""
 	sudo $(ACBUILD) copy build/ngrok /usr/bin/ngrok
 	sudo $(ACBUILD) copy ngrok2.conf /etc/ngrok2.conf
 	sudo $(ACBUILD) copy run.sh /opt/bin/run.sh
