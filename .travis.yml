@@ -1,16 +1,6 @@
-sudo: required
+sudo: false
 language: c
-services:
-  - docker
-script:
-  - |
-    docker run -ti --rm --privileged -w /build -v `pwd`:/build \
-      -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-      fedora:24 \
-      /bin/bash -c 'dnf install -y curl make sudo systemd-container tar unzip && systemd-machine-id-setup && make'
-  - sudo chown -R `whoami` .
-after_success:
-  - ls . && ls -la build && ls -la ./dist
+script: make
 deploy:
   provider: releases
   api_key:
