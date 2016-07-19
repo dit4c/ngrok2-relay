@@ -1,6 +1,10 @@
 sudo: false
 language: c
 script: make
+addons:
+  apt:
+    packages:
+      - bc
 deploy:
   provider: releases
   api_key:
