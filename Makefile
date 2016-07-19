@@ -52,7 +52,7 @@ build/library-debian-8.aci: build/docker2aci
 	cd build && ./docker2aci docker://debian:8
 
 build/acbuild: | build
-	curl -sL https://github.com/appc/acbuild/releases/download/v${ACBUILD_VERSION}/acbuild-v${ACBUILD_VERSION}.tar.gz | tar xv -C build
+	curl -sL https://github.com/appc/acbuild/releases/download/v${ACBUILD_VERSION}/acbuild-v${ACBUILD_VERSION}.tar.gz | tar xvz -C build
 	mv build/acbuild-v${ACBUILD_VERSION}/acbuild build/acbuild
 	rm -rf build/acbuild-v${ACBUILD_VERSION}
 
