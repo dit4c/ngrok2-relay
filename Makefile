@@ -38,6 +38,7 @@ dist/dit4c-helper-listener-ngrok2.linux.amd64.aci: build/acbuild build/library-d
 	sudo $(ACBUILD) set-name dit4c-helper-listener-ngrok2
 	sudo $(ACBUILD) set-user nobody
 	sudo $(ACBUILD) set-group nobody
+	sudo $(ACBUILD) set-exec -- /opt/bin/run.sh
 	sudo $(ACBUILD) write --overwrite dist/dit4c-helper-listener-ngrok2.linux.amd64.aci
 	sudo $(ACBUILD) end
 
