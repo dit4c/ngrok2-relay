@@ -50,7 +50,7 @@ build:
 
 build/rootfs.tar: build/buildroot
 	cp buildroot.config build/buildroot/.config
-	sh -c "cd build/buildroot && make"
+	sh -c "cd build/buildroot && make -s"
 	mv build/buildroot/output/images/rootfs.tar build/
 
 build/buildroot: | build
