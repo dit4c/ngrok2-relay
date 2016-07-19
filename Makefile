@@ -1,4 +1,4 @@
-.DEFAULT_GOAL := dist/dit4c-helper-listener-ngrok2-CHECKSUM
+.DEFAULT_GOAL := dist/SHA512SUM
 
 CLIENT_INSTALLER_URL=https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
 BUILDROOT_VERSION=2016.05
@@ -8,8 +8,8 @@ ACBUILD=build/acbuild
 NGROK_REGIONS=ap au eu us
 IMAGES=$(foreach region, $(NGROK_REGIONS), dist/dit4c-helper-listener-ngrok2-$(region).linux.amd64.aci)
 
-dist/dit4c-helper-listener-ngrok2-CHECKSUM: dist/dit4c-helper-listener-ngrok2.linux.amd64.aci $(IMAGES)
-	sha512sum --tag $^ | sed -e 's/dist\///' > dist/dit4c-helper-listener-ngrok2-CHECKSUM
+dist/SHA512SUM: dist/dit4c-helper-listener-ngrok2.linux.amd64.aci $(IMAGES)
+	sha512sum $^ | sed -e 's/dist\///' > dist/SHA512SUM
 
 dist/dit4c-helper-listener-ngrok2-%.linux.amd64.aci: dist/dit4c-helper-listener-ngrok2.linux.amd64.aci
 	rm -rf .acbuild

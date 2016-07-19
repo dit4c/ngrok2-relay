@@ -16,7 +16,7 @@ deploy:
     - dist/dit4c-helper-listener-ngrok2-au.linux.amd64.aci
     - dist/dit4c-helper-listener-ngrok2-eu.linux.amd64.aci
     - dist/dit4c-helper-listener-ngrok2-us.linux.amd64.aci
-    - dist/dit4c-helper-listener-ngrok2-CHECKSUM
+    - dist/SHA512SUM
   skip_cleanup: true
   on:
     tags: true
