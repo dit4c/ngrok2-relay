@@ -5,6 +5,7 @@ addons:
   apt:
     packages:
       - bc
+      - texinfo
 deploy:
   provider: releases
   api_key:
