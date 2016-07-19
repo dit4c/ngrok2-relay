@@ -25,4 +25,4 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-    repo: dit4c/dit4c-router-ngrok2
+    repo: dit4c/dit4c-helper-listener-ngrok2
