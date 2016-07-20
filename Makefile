@@ -29,6 +29,7 @@ dist/dit4c-helper-listener-ngrok2.linux.amd64.aci: build/acbuild build/rootfs.ta
 	$(ACBUILD) environment add DIT4C_INSTANCE_JWT_ISS ""
 	$(ACBUILD) environment add DIT4C_INSTANCE_HELPER_AUTH_HOST ""
 	$(ACBUILD) environment add DIT4C_INSTANCE_HELPER_AUTH_PORT ""
+	$(ACBUILD) environment add DIT4C_INSTANCE_URI_UPDATE_URL ""
 	$(ACBUILD) environment add NGROK_REGION ""
 	$(ACBUILD) copy build/ngrok /usr/bin/ngrok
 	$(ACBUILD) copy ngrok2.conf /etc/ngrok2.conf
@@ -36,8 +37,8 @@ dist/dit4c-helper-listener-ngrok2.linux.amd64.aci: build/acbuild build/rootfs.ta
 	$(ACBUILD) copy listen_for_url.sh /opt/bin/listen_for_url.sh
 	$(ACBUILD) copy notify_portal.sh /opt/bin/notify_portal.sh
 	$(ACBUILD) set-name dit4c-helper-listener-ngrok2
-	$(ACBUILD) set-user nobody
-	$(ACBUILD) set-group nobody
+	$(ACBUILD) set-user 99
+	$(ACBUILD) set-group 99
 	$(ACBUILD) set-exec -- /opt/bin/run.sh
 	$(ACBUILD) write --overwrite dist/dit4c-helper-listener-ngrok2.linux.amd64.aci
 	$(ACBUILD) end
