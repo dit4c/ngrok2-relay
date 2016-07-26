@@ -1,5 +1,6 @@
 sudo: required
-language: c
+dist: trusty
+language: generic
 script: make && make test
 addons:
   apt:
