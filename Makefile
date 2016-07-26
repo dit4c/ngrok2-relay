@@ -80,7 +80,7 @@ build/rkt: | build
 	mv build/rkt-v${RKT_VERSION} build/rkt
 
 test: build/bats build/rkt dist/dit4c-helper-listener-ngrok2.linux.amd64.aci
-	sudo -v && echo "" && build/bats/bin/bats test
+	sudo -v && echo "" && build/bats/bin/bats --pretty test
 
 clean:
 	-rm -rf build .acbuild dist
