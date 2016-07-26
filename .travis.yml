@@ -6,6 +6,9 @@ addons:
     packages:
       - bc
       - texinfo
+cache:
+  directories:
+    - $HOME/.buildroot-ccache
 deploy:
   provider: releases
   api_key:
