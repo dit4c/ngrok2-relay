@@ -1,6 +1,6 @@
 sudo: required
 language: c
-script: make
+script: make && make test
 addons:
   apt:
     packages:

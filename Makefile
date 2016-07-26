@@ -1,9 +1,10 @@
 .DEFAULT_GOAL := dist/SHA512SUM
+.PHONY: clean test
 
 CLIENT_INSTALLER_URL=https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
 BUILDROOT_VERSION=2016.05
 ACBUILD_VERSION=0.3.1
-DOCKER2ACI_VERSION=0.12.0
+RKT_VERSION=1.11.0
 ACBUILD=build/acbuild
 NGROK_REGIONS=ap au eu us
 IMAGES=$(foreach region, $(NGROK_REGIONS), dist/dit4c-helper-listener-ngrok2-$(region).linux.amd64.aci)
@@ -61,12 +62,25 @@ build/buildroot: | build
 build/acbuild: | build
 	curl -sL https://github.com/appc/acbuild/releases/download/v${ACBUILD_VERSION}/acbuild-v${ACBUILD_VERSION}.tar.gz | tar xz -C build
 	mv build/acbuild-v${ACBUILD_VERSION}/acbuild build/acbuild
-	rm -rf build/acbuild-v${ACBUILD_VERSION}
+	-rm -rf build/acbuild-v${ACBUILD_VERSION}
 
 build/ngrok: | build
 	curl -sL https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip > build/ngrok.zip
 	unzip -d build build/ngrok.zip
 	rm build/ngrok.zip
+
+build/bats: | build
+	curl -sL https://github.com/sstephenson/bats/archive/master.zip > build/bats.zip
+	unzip -d build build/bats.zip
+	mv build/bats-master build/bats
+	rm build/bats.zip
+
+build/rkt: | build
+	curl -sL https://github.com/coreos/rkt/releases/download/v${RKT_VERSION}/rkt-v${RKT_VERSION}.tar.gz | tar xz -C build
+	mv build/rkt-v${RKT_VERSION} build/rkt
+
+test: build/bats build/rkt dist/dit4c-helper-listener-ngrok2.linux.amd64.aci
+	sudo -v && echo "" && build/bats/bin/bats test
 
 clean:
 	-rm -rf build .acbuild dist
