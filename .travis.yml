@@ -13,15 +13,14 @@ cache:
 deploy:
   provider: releases
   api_key:
-    secure: LzLM/6UWIFAODXVOYWKfBzcQMkNktRNp2vWdklE5PGTFYhap/iCqN3/9QUjsV8zAg1WsYU6zXlGsUq9oiDEaNq3cUpMNUtqURp2Y0BbuTyg+u+f93w/3Yi/tzPiLdbSHmT2RaxXSibrjPS32ZMP8MixRB4Xrtc7Pon/7eZSAdURBAq+B8um48E1Zyybf8REpCgkcAsJyiqhQxLWS3ekdfXoIhbUib5YDJdwKbMzwYzI22lVg7qI9g/6rS6qX+faFMH9Jztve7KbxOVjkYYXZ4PsUw1Abo2Tas7HxG67tM+6/jNGYryYBinhsKVMmrgbAlPRubqCdJeUeFgeaby66QEHSi35cHaiqkk+SujclJ5b9StfYFRhLCWkerkRulYCW6wecYWhAPMGaNbaRUJOsyG4nNoVPpHhszmHcKSrI9IWhqhl2wnNGyYC9guWDUYrb1eW8/sCWRvhYDtRzecHMhWTOX179ZDH14v9cLQL3G20F7JDxhFDA3ej33Wamro1Cee5gEUL6cHkBrJzbcJDLz+3XJcikm2FEbgL96Kq6eYehg7PnSiZhIeZKACYdTNDo7kpq0OC9ZmEO8fX+L61typO8AKtWbFbRrzH7x51nYh0HfMXWP7VoPo4/czTbGUinJ6b+JD/Fybx3w9x64q/RHm88iSnebyB81ekmshmbM64=
   file:
-    - dist/dit4c-helper-listener-ngrok2.linux.amd64.aci
-    - dist/dit4c-helper-listener-ngrok2-ap.linux.amd64.aci
-    - dist/dit4c-helper-listener-ngrok2-au.linux.amd64.aci
-    - dist/dit4c-helper-listener-ngrok2-eu.linux.amd64.aci
-    - dist/dit4c-helper-listener-ngrok2-us.linux.amd64.aci
+    - dist/ngrok2-relay.linux.amd64.aci
+    - dist/ngrok2-relay-ap.linux.amd64.aci
+    - dist/ngrok2-relay-au.linux.amd64.aci
+    - dist/ngrok2-relay-eu.linux.amd64.aci
+    - dist/ngrok2-relay-us.linux.amd64.aci
     - dist/SHA512SUM
   skip_cleanup: true
   on:
     tags: true
-    repo: dit4c/dit4c-helper-listener-ngrok2
+    repo: dit4c/ngrok2-relay

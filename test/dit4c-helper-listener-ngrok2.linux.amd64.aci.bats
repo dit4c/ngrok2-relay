@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-IMAGE="$BATS_TEST_DIRNAME/../dist/dit4c-helper-listener-ngrok2.linux.amd64.aci"
+IMAGE="$BATS_TEST_DIRNAME/../dist/ngrok2-relay.linux.amd64.aci"
 RKT_DIR="$BATS_TMPDIR/rkt-env"
 RKT_STAGE1="$BATS_TEST_DIRNAME/../build/rkt/stage1-coreos.aci"
 RKT="$BATS_TEST_DIRNAME/../build/rkt/rkt --dir=$RKT_DIR"
