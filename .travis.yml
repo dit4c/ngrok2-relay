@@ -11,10 +11,12 @@ cache:
   directories:
     - $HOME/.buildroot-ccache
 before_deploy:
+- openssl aes-256-cbc -K $encrypted_02fc5db263db_key -iv $encrypted_02fc5db263db_iv -in signing.key.enc -out signing.key -d
 - make deploy
 deploy:
   provider: releases
   api_key:
+    secure: K1g2WS6pQhN3oGH/wxFaoE6QTHsC7Ni2Yrb3CanWnm8PNy3z+Gz4/aL83VdUgLIuPL/zoJx/o49V7ak6Ai+623AhzcSVQOGKg+OnI1svOMqWSirEokNX8yyHHZFBWAfL9pduSC6klIbPF9Pu51VExNB7sOuCnyNZ4GH0UBvH3p9W25wtiHjqaEXSnZ18J+UMtbw7XJoKebGVF97yyPezxwAN3k8Yl1SE63ML1mH22wbATpCUGU7D6CMeiNkZe1JmMy20MflIKgG4wv1RCDaC7kSTz6CT6XDDOWSpvukkj3wC5QNvPBkwtUmIEHJAT9dnAmCH9trKvmsEimWRyxIbzJweO5jETrjKVq2KkDF/5CesKyPwnEiX0M6ShYorZxctxj+0pH7ck8JLRn9CAy7v2TPqO+bwgFYaHATdASUZSFYrGfosCSicMoE3nemIkmtpGxUHQ+w//ujEZs5KvjMuiFTr0Ar+sIaM+GT1LEYMnpX0ZuWGAui4YwLxLuiLzBnn16rWsQQkDZ8Ew69NPuVnlNHIvdw4m/W89mss0d3TPgU8NKCJpAnt7ZOXQ6A5VlH2VYIMvSDetXNpunGHwwiucNQyZLt+r93f2f5sW9EGE3Tz50keSwTimyzgoRCDcSyY/r+M51s9BESY8uXLDb8S9IBQvPEpXPXMc4/BUgM5DEU=
   file:
     - dist/ngrok2-relay.linux.amd64.aci
     - dist/ngrok2-relay.linux.amd64.aci.asc
