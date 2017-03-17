@@ -10,16 +10,14 @@ addons:
 cache:
   directories:
     - $HOME/.buildroot-ccache
+before_deploy:
+- make deploy
 deploy:
   provider: releases
   api_key:
   file:
     - dist/ngrok2-relay.linux.amd64.aci
-    - dist/ngrok2-relay-ap.linux.amd64.aci
-    - dist/ngrok2-relay-au.linux.amd64.aci
-    - dist/ngrok2-relay-eu.linux.amd64.aci
-    - dist/ngrok2-relay-us.linux.amd64.aci
-    - dist/SHA512SUM
+    - dist/ngrok2-relay.linux.amd64.aci.asc
   skip_cleanup: true
   on:
     tags: true

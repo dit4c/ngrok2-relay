@@ -1,21 +1,29 @@
-.DEFAULT_GOAL := dist/SHA512SUM
-.PHONY: clean test
-
 NAME=ngrok2-relay
 BASE_DIR=.
 BUILD_DIR=$(BASE_DIR)/build
 OUT_DIR=$(BASE_DIR)/dist
+TARGET_IMAGE=$(OUT_DIR)/$(NAME).linux.amd64.aci
 
+.DEFAULT_GOAL := $(TARGET_IMAGE)
+.PHONY: clean test deploy
+
+GPG=gpg2
 CLIENT_INSTALLER_URL=https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
 BUILDROOT_VERSION=2017.02
 ACBUILD_VERSION=0.4.0
 RKT_VERSION=1.25.0
 ACBUILD=build/acbuild
 
-TARGET_IMAGE=${OUT_DIR}/${NAME}.linux.amd64.aci
+deploy: $(TARGET_IMAGE) $(TARGET_IMAGE).asc
 
-$(OUT_DIR)/SHA512SUM: $(TARGET_IMAGE) $(TARGET_IMAGES) | $(OUT_DIR)
-	sha512sum $^ | sed -e 's/dist\///' > dist/SHA512SUM
+$(OUT_DIR)/%.aci.asc: dist/%.aci signing.key
+	$(eval TMP_PUBLIC_KEYRING := $(shell mktemp -p ./build))
+	$(eval TMP_SECRET_KEYRING := $(shell mktemp -p ./build))
+	$(eval GPG_FLAGS := --batch --no-default-keyring --keyring $(TMP_PUBLIC_KEYRING) --secret-keyring $(TMP_SECRET_KEYRING) )
+	$(GPG) $(GPG_FLAGS) --import signing.key
+	rm -f $@
+	$(GPG) $(GPG_FLAGS) --armour --detach-sign $<
+	rm $(TMP_PUBLIC_KEYRING) $(TMP_SECRET_KEYRING)
 
 $(OUT_DIR)/$(NAME)-%.linux.amd64.aci: $(TARGET_IMAGE) | $(OUT_DIR)
 	sudo rm -rf .acbuild
@@ -78,8 +86,8 @@ $(BUILD_DIR)/rkt: | $(BUILD_DIR)
 	curl -sL https://github.com/coreos/rkt/releases/download/v${RKT_VERSION}/rkt-v${RKT_VERSION}.tar.gz | tar xz -C build
 	mv build/rkt-v${RKT_VERSION} build/rkt
 
-test: build/bats build/rkt dist/dit4c-helper-listener-ngrok2.linux.amd64.aci
+test: $(BUILD_DIR)/bats $(BUILD_DIR)/rkt $(TARGET_IMAGE)
 	sudo -v && echo "" && build/bats/bin/bats --pretty test
 
 clean:
-	-rm -rf build .acbuild dist
+	-rm -rf $(BUILD_DIR) $(OUT_DIR)
